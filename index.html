@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Easybank landing page for next-generation digital banking.">
+    <meta name="keywords" content="banking, finance, online banking, easybank">
+    <title>Frontend Mentor | Easybank Landing Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="./public/favicon-32x32.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <header class="header grid margin-rl">
+            <div class="header-div">
+                <img src="./public/logo.svg" alt="Easybank Logo">
+            </div>
+            <div class="nav-div">
+                <nav class="nav-bar">
+                    <ul class="side-bar">
+                        <li onclick="hideSidebar()" class="close">
+                            <a href="#" aria-label="Close sidebar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" fill="#000000" fill-rule="evenodd">
+                                    <path d="M.868.661l16.97 16.97-.706.708L.162 1.369z"/>
+                                    <path d="M.161 17.632L17.131.662l.708.706-16.97 16.97z"/>
+                                </svg>
+                            </a>
+                        </li>
+                        <li class="list-items"><a href="#home" class="cf">Home</a></li>
+                        <li class="list-items"><a href="#about" class="cf">About</a></li>
+                        <li class="list-items"><a href="#contact" class="cf">Contact</a></li>
+                        <li class="list-items"><a href="#blog" class="cf">Blog</a></li>
+                        <li class="list-items"><a href="#careers" class="cf">Careers</a></li>
+                    </ul>
+                    <ul class="nav-list">
+                        <li class="list-items hide-on-small"><a href="#home">Home</a></li>
+                        <li class="list-items hide-on-small"><a href="#about">About</a></li>
+                        <li class="list-items hide-on-small"><a href="#contact">Contact</a></li>
+                        <li class="list-items hide-on-small"><a href="#blog">Blog</a></li>
+                        <li class="list-items hide-on-small"><a href="#careers" class="careers">Careers</a></li>
+                        <li onclick="showSidebar()">
+                            <a href="#" class="hide-on-big ham" aria-label="Open sidebar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="11" fill="#2D314D" fill-rule="evenodd">
+                                    <path d="M0 0h24v1H0zM0 5h24v1H0zM0 10h24v1H0z"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="button-div">
+                <button class="invite btn">Request Invite</button>
+            </div>
+        </header>
+        <!-- hero section -->
+         <br>
+         <br>
+         <br>
+         <br>
+        <div class="hero-section" id="home">
+            <div class="hero-main grid">
+                <div class="details">
+                    <h1>Next Generation Digital Banking</h1>
+                    <h3>
+                        Take your financial life online. Your Easybank account will be a one-stop shop for spending, saving, budgeting, investing, and much more.
+                    </h3>
+                    <button class="btn btn-hero">Request Invite</button>
+                </div>
+                <div class="background">
+                    <img src="./public/bg-intro-desktop.svg" alt="Background Intro Desktop" width="700" height="700" class="desktop">
+                    <img src="./public/bg-intro-mobile.svg" alt="Background Intro Mobile" class="mobile" width="200">
+                </div>
+                <div id="phone">
+                    <img src="./public/image-mockups.png" alt="Phone Mockups" width="450">
+                </div>
+            </div>
+        </div>
+        
+        <div id="about">
+            <div class="about-details">
+                <h1 class="margin-rl">Why Choose Easybank?</h1>
+                <h3 class="margin-rl">We leverage Open Banking to turn your bank account into your financial hub.</h3>
+                <h3 class="margin-rl">Control your finances like never before</h3>
+            </div>
+            <div class="about-list grid margin-rl">
+                <div class="online card">
+                    <img src="./public/icon-online.svg" alt="Online Banking Icon" class="icon">
+                    <h1>Online Banking</h1>
+                    <h3>Our modern web and mobile applications allow you to keep track of your finances wherever you are in the world.</h3>
+                </div>
+                <div class="budgeting card">
+                    <img src="./public/icon-budgeting.svg" alt="Simple Budgeting Icon" class="icon">
+                    <h1>Simple Budgeting</h1>
+                    <h3>See exactly where your money goes each month. Receive notifications when you're close to hitting your limits.</h3>
+                </div>
+                <div class="onboarding card">
+                    <img src="./public/icon-onboarding.svg" alt="Fast Onboarding Icon" class="icon">
+                    <h1>Fast Onboarding</h1>
+                    <h3>We don't do branches. Open your account in minutes online and start taking control of your finances the right way.</h3>
+                </div>
+                <div class="api card">
+                    <img src="./public/icon-api.svg" alt="Open API Icon" class="icon">
+                    <h1>Open API</h1>
+                    <h3>Manage your savings, investments, pension, and much more from one account. Tracking your money has never been easier.</h3>
+                </div>
+            </div>
+        </div>
+        <div id="blog">
+            <h1 class="margin-rl margintp latest">Latest Articles</h1>
+            <div class="blog-list grid margin-rl">
+                <div class="card-1 margintp bg-color">
+                    <div width="300" id="card-div">
+                        <img src="./public/image-currency.jpg" alt="Currency Image" class="img">
+                    </div>
+                    <div class="card-details">
+                        <h5>By Claire Robinson</h5>
+                        <h1>Receive Money in Any Currency with No Fees</h1>
+                        <h3>The world is getting smaller and we're becoming more mobile. So why should you be forced to only receive money in a single currency?</h3>
+                    </div>
+                </div>
+                <div class="card-2 margintp bg-color">
+                    <div width="300" id="card-div">
+                        <img src="./public/image-restaurant.jpg" alt="Restaurant Image" class="img">
+                    </div>
+                    <div class="card-details">
+                        <h5>By Wilson Hutton</h5>
+                        <h1>Treat Yourself Without Worrying About Money</h1>
+                        <h3>Our simple budgeting feature allows you to separate your spending and set a limit on the amount you want to spend on your next outing.</h3>
+                    </div>
+                </div>
+                <div class="card-3 margintp bg-color">
+                    <div width="300" id="card-div">
+                        <img src="./public/image-plane.jpg" alt="Plane Image" class="img">
+                    </div>
+                    <div class="card-details">
+                        <h5>By William Hutton</h5>
+                        <h1>Take Your Easybank Card Wherever You Go</h1>
+                        <h3>We want you to enjoy your travels. This is why we don't charge any fees on purchases made abroad. With Easybank, you're good to go.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="contact">
+            <div class="footer grid">
+                <div class="social">
+                    <h1>Join our community</h1>
+                    <div class="social-icons">
+                        <a href="#"><img src="./public/icon-facebook.svg" alt="Facebook Icon" width="20"></a>
+                        <a href="#"><img src="./public/icon-twitter.svg" alt="Twitter Icon" width="20"></a>
+                        <a href="#"><img src="./public/icon-pinterest.svg" alt="Pinterest Icon" width="20"></a>
+                        <a href="#"><img src="./public/icon-instagram.svg" alt="Instagram Icon" width="20"></a>
+                    </div>
+                </div>
+                <div class="address">
+                    <div class="footer-logo">
+                        <img src="./public/logo.svg" alt="Easybank Logo">
+                    </div>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="address">
+                    <ul>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="address">
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Refund Policy</a></li>
+                        <li><a href="#">Sitemap</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <h4>&copy; Easybank. All Rights Reserved</h4>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
