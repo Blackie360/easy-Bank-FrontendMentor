@@ -4,7 +4,7 @@ Welcome to my first assignment for the GIDA Web2 Advanced course at Kabarak Univ
 
 ## Frontend Mentor - Easybank Landing Page Solution
 
-This project is a solution to the [Easybank landing page challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/easybank-landing-page-WaUhkoDN). These challenges are a great way to enhance your coding skills by working on realistic web development projects.
+This project is a solution to the [Easybank landing page challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/easybank-landing-page-WaUhkoDN/hub). These challenges are a great way to enhance your coding skills by working on realistic web development projects.
 
 ## Overview
 
@@ -19,7 +19,7 @@ The challenge required users to:
 
 ### Links
 
-- **Live Site URL**: [EasyBank-Demo](https://easy-bank-demo.vercel.app/)
+- **Live Site URL**: [EasyBank-Demo](https://easybankme.netlify.app/)
 
 ## My Process
 
@@ -30,7 +30,7 @@ The challenge required users to:
 - Flexbox
 - CSS Grid
 - Desktop-First Workflow
-- Vanilla JavaScript
+
 
 ### What I Learned
 
