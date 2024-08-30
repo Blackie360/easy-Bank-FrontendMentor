@@ -39,8 +39,3 @@ Throughout this project, I gained valuable experience in several areas:
 - Modifying SVG image colors.
 - Using z-index for element layering and overlay.
 
-### Future Development
-
-I plan to further develop the project by:
-- Enhancing the navbar with interactive hover effects.
-- Implementing responsive background images based on screen size.
