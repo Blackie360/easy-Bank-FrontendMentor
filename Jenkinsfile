@@ -1,68 +1,72 @@
 pipeline {
     agent any
 
-    environment {
-        DIRECTORY_PATH = "${env.WORKSPACE}"
-        TESTING_ENVIRONMENT = 'Staging'
-        PRODUCTION_ENVIRONMENT = 'Blackie360Production'  // Customize the production environment name
-    }
-
     stages {
         stage('Build') {
             steps {
-                script {
-                    echo "Fetching the source code from the directory path: ${env.DIRECTORY_PATH}"
-                    echo "Compiling the code and generating any necessary artifacts"
-                }
+                echo 'Building the code...'
+                // Example: Use Maven as a build automation tool for Java projects
+                sh 'mvn clean package'
             }
         }
 
-        stage('Test') {
+        stage('Unit and Integration Tests') {
             steps {
-                script {
-                    echo "Running unit tests"
-                    echo "Running integration tests"
-                }
+                echo 'Running unit and integration tests...'
+                // Example: Use JUnit or TestNG for testing Java applications
+                sh 'mvn test'
             }
         }
 
-        stage('Code Quality Check') {
+        stage('Code Analysis') {
             steps {
-                script {
-                    echo "Checking the quality of the code"
-                }
+                echo 'Performing code analysis...'
+                // Example: Use SonarQube for code analysis
+                sh 'sonar-scanner'
             }
         }
 
-        stage('Deploy') {
+        stage('Security Scan') {
             steps {
-                script {
-                    echo "Deploying the application to the testing environment: ${env.TESTING_ENVIRONMENT}"
-                }
+                echo 'Performing security scan...'
+                // Example: Use OWASP Dependency-Check for security vulnerabilities
+                sh 'dependency-check --project test --scan .'
             }
         }
 
-        stage('Approval') {
+        stage('Deploy to Staging') {
             steps {
-                script {
-                    echo "Waiting for manual approval..."
-                    sleep(time: 10, unit: 'SECONDS')  // Simulate approval with a sleep
-                }
+                echo 'Deploying to staging environment...'
+                // Example: Use AWS CLI to deploy to AWS EC2
+                sh 'aws ec2 deploy --environment staging'
+            }
+        }
+
+        stage('Integration Tests on Staging') {
+            steps {
+                echo 'Running integration tests on staging...'
+                // Run automated tests in the staging environment
+                sh './run-integration-tests.sh'
             }
         }
 
         stage('Deploy to Production') {
             steps {
-                script {
-                    echo "Deploying the application to the production environment: ${env.PRODUCTION_ENVIRONMENT}"
-                }
+                echo 'Deploying to production...'
+                // Example: Use AWS CLI to deploy to AWS EC2 production instance
+                sh 'aws ec2 deploy --environment production'
             }
         }
     }
 
     post {
         always {
-            echo "Pipeline execution complete"
+            echo 'Sending email notifications...'
+            // Configure email notifications after test and security stages
+            mail to: 'felixkent360@gmail.com',
+                subject: "Pipeline ${currentBuild.fullDisplayName} completed",
+                body: "Build finished with status: ${currentBuild.result}",
+                attachmentsPattern: '**/target/logs/*.log'
         }
     }
 }
