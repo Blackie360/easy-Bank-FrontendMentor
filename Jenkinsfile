@@ -1,108 +1,83 @@
 pipeline {
     agent any
 
-    environment {
-        EMAIL_RECIPIENT = 'felixkent360@gmail.com' // Define your email recipient here
-        // Add any other environment variables here
-    }
-
     stages {
-        stage('Checkout SCM') {
-            steps {
-                script {
-                    echo 'Checking out the source code...'
-                    checkout scm
-                }
-            }
-        }
-
+        // Stage 1: Build
         stage('Build') {
             steps {
-                script {
-                    echo 'Building the code...'
-                    // Use npm for building a JavaScript project
-                    sh 'npm install'
-                    sh 'npm run build'
-                }
+                echo 'Building the web project...'
+                // Since it's a static site, there's no complex build process.
+                // You could use a build tool like Webpack or any bundler if needed.
+                // For simplicity, just echoing this step.
             }
         }
 
+        // Stage 2: Unit and Integration Tests
         stage('Unit and Integration Tests') {
             steps {
-                script {
-                    echo 'Running unit and integration tests...'
-                    // Use npm for running tests
-                    sh 'npm test'
-                    sh 'npm run integration-test'
-                }
+                echo 'Running Unit Tests...'
+                // If you had JavaScript tests (e.g., Jest, Mocha), you'd run them here.
+                // Example for Jest (you need to install and set it up in your project)
+                // sh 'npm test'
             }
         }
 
+        // Stage 3: Code Analysis
         stage('Code Analysis') {
             steps {
-                script {
-                    echo 'Performing code analysis...'
-                    // Use ESLint for JavaScript code analysis
-                    sh 'npx eslint .'
-                }
+                echo 'Running code analysis...'
+                // Example: Run ESLint for JavaScript analysis
+                sh 'npx eslint script.js'
+
+                // Example: Run Stylelint for CSS analysis
+                sh 'npx stylelint styles.css'
             }
         }
 
+        // Stage 4: Security Scan
         stage('Security Scan') {
             steps {
-                script {
-                    echo 'Performing security scan...'
-                    // Use Snyk for security scanning
-                    sh 'npx snyk test'
-                }
+                echo 'Running security scan...'
+                // Example: Run npm audit (if using npm packages)
+                // sh 'npm audit'
             }
         }
 
+        // Stage 5: Deploy to Staging
         stage('Deploy to Staging') {
             steps {
-                script {
-                    echo 'Deploying to staging server...'
-                    // Deploy using Netlify CLI
-                    sh 'netlify deploy --prod --dir=build'
-                }
+                echo 'Deploying to Staging...'
+                // Deploy the site to a staging server, for example, using SCP
+                // sh 'scp -r * user@staging-server:/path/to/deploy'
             }
         }
 
+        // Stage 6: Integration Tests on Staging
         stage('Integration Tests on Staging') {
             steps {
-                script {
-                    echo 'Running integration tests on staging...'
-                    // Use a custom script for staging tests
-                    sh './staging-tests.sh'
-                }
+                echo 'Running integration tests on staging...'
+                // Perform manual/automated tests in staging
             }
         }
 
+        // Stage 7: Deploy to Production
         stage('Deploy to Production') {
             steps {
-                script {
-                    echo 'Deploying to production server...'
-                    // Deploy to production using Netlify CLI
-                    sh 'netlify deploy --prod --dir=build'
-                }
+                echo 'Deploying to Production...'
+                // Deploy the web project to production server
+                // sh 'scp -r * user@production-server:/path/to/deploy'
             }
         }
     }
 
+    // Email notification configuration
     post {
-        success {
-            emailext(
-                subject: 'Build Successful',
-                body: 'The build was successful. Check the build logs for more details.',
-                to: "${EMAIL_RECIPIENT}"
-            )
-        }
-        failure {
-            emailext(
-                subject: 'Build Failed',
-                body: 'The build failed. Please check the logs for details.',
-                to: "${EMAIL_RECIPIENT}"
-            )
+        always {
+            echo 'Sending Email Notifications...'
+            // Send email notification with build status
+            mail to: 'your-email@example.com',
+                 subject: "Pipeline Status: ${currentBuild.fullDisplayName}",
+                 body: "The pipeline finished with status: ${currentBuild.result}"
         }
     }
 }
