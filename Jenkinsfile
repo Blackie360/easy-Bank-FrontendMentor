@@ -1,72 +1,87 @@
 pipeline {
     agent any
 
+    environment {
+        // Define environment variables if needed
+        SMTP_SERVER = 'smtp.gmail.com'
+        SMTP_PORT = '587'
+        EMAIL_RECIPIENT = 'felixkent360@gmail.com'
+    }
+
     stages {
         stage('Build') {
             steps {
                 echo 'Building the code...'
-                // Example: Use Maven as a build automation tool for Java projects
-                sh 'mvn clean package'
+                // Build automation tool
+                sh 'mvn clean package' // Maven is used for Java projects
             }
         }
 
         stage('Unit and Integration Tests') {
             steps {
                 echo 'Running unit and integration tests...'
-                // Example: Use JUnit or TestNG for testing Java applications
-                sh 'mvn test'
+                // Test automation tools
+                sh 'mvn test' // JUnit or TestNG for testing
             }
         }
 
         stage('Code Analysis') {
             steps {
                 echo 'Performing code analysis...'
-                // Example: Use SonarQube for code analysis
-                sh 'sonar-scanner'
+                // Code analysis tool
+                sh 'sonar-scanner' // SonarQube is used for code quality analysis
             }
         }
 
         stage('Security Scan') {
             steps {
                 echo 'Performing security scan...'
-                // Example: Use OWASP Dependency-Check for security vulnerabilities
-                sh 'dependency-check --project test --scan .'
+                // Security scanning tool
+                sh 'dependency-check --project test --scan .' // OWASP Dependency-Check
             }
         }
 
         stage('Deploy to Staging') {
             steps {
                 echo 'Deploying to staging environment...'
-                // Example: Use AWS CLI to deploy to AWS EC2
-                sh 'aws ec2 deploy --environment staging'
+                // Deployment tool
+                sh 'aws deploy --environment staging' // AWS CLI for deployment
             }
         }
 
         stage('Integration Tests on Staging') {
             steps {
                 echo 'Running integration tests on staging...'
-                // Run automated tests in the staging environment
-                sh './run-integration-tests.sh'
+                // Run integration tests in staging environment
+                sh './run-integration-tests.sh' // Custom script for integration tests
             }
         }
 
         stage('Deploy to Production') {
             steps {
                 echo 'Deploying to production...'
-                // Example: Use AWS CLI to deploy to AWS EC2 production instance
-                sh 'aws ec2 deploy --environment production'
+                // Deployment tool
+                sh 'aws deploy --environment production' // AWS CLI for production deployment
             }
         }
     }
 
     post {
         always {
-            echo 'Sending email notifications...'
-            // Configure email notifications after test and security stages
-            mail to: 'felixkent360@gmail.com',
+            emailext (
+                to: "${env.EMAIL_RECIPIENT}",
                 subject: "Pipeline ${currentBuild.fullDisplayName} completed",
                 body: "Build finished with status: ${currentBuild.result}",
                 attachmentsPattern: '**/target/logs/*.log'
+            )
+        }
+
+        success {
+            echo 'Build succeeded!'
+        }
+
+        failure {
+            echo 'Build failed!'
         }
     }
 }
