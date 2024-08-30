@@ -38,7 +38,6 @@ Throughout this project, I gained valuable experience in several areas:
 - Creating a functional hamburger menu.
 - Modifying SVG image colors.
 - Using z-index for element layering and overlay.
-- 
   
   
 
