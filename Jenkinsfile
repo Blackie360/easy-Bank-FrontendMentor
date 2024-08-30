@@ -1,87 +1,69 @@
 pipeline {
     agent any
-
     environment {
-        // Define environment variables if needed
-        SMTP_SERVER = 'smtp.gmail.com'
-        SMTP_PORT = '587'
         EMAIL_RECIPIENT = 'felixkent360@gmail.com'
+        NETLIFY_AUTH_TOKEN = credentials('nfp_STCF7VJwsiVC7oyrjTRpxyyMjdWeFr5tcf0a') // Configure Netlify token in Jenkins credentials
+        NETLIFY_SITE_ID = 'your-netlify-site-id' // Your Netlify site ID
     }
-
     stages {
         stage('Build') {
             steps {
-                echo 'Building the code...'
-                // Build automation tool
-                sh 'mvn clean package' // Maven is used for Java projects
+                echo 'Stage 1: Build - Building the project...'
+                // Add any build steps if needed
+                // Example: If using a static site generator
+                sh 'npm install'
             }
         }
-
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit and integration tests...'
-                // Test automation tools
-                sh 'mvn test' // JUnit or TestNG for testing
+                echo 'Stage 2: Unit and Integration Tests - Running tests...'
+                // Example: Run JS unit tests using Jest
+                sh 'npm test'
             }
         }
-
         stage('Code Analysis') {
             steps {
-                echo 'Performing code analysis...'
-                // Code analysis tool
-                sh 'sonar-scanner' // SonarQube is used for code quality analysis
+                echo 'Stage 3: Code Analysis - Analyzing code...'
+                // Tool: ESLint for JavaScript code analysis
+                sh 'npx eslint .'
             }
         }
-
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan...'
-                // Security scanning tool
-                sh 'dependency-check --project test --scan .' // OWASP Dependency-Check
+                echo 'Stage 4: Security Scan - Scanning for vulnerabilities...'
+                // Tool: Snyk for JavaScript security scanning
+                sh 'npx snyk test'
             }
         }
-
-        stage('Deploy to Staging') {
+        stage('Deploy to Netlify') {
             steps {
-                echo 'Deploying to staging environment...'
-                // Deployment tool
-                sh 'aws deploy --environment staging' // AWS CLI for deployment
+                echo 'Stage 5: Deploy to Netlify - Deploying to Netlify...'
+                // Deploy to Netlify using CLI
+                sh 'netlify deploy --prod --site ${NETLIFY_SITE_ID} --auth ${NETLIFY_AUTH_TOKEN}'
             }
         }
-
-        stage('Integration Tests on Staging') {
+        stage('Integration Tests on Production') {
             steps {
-                echo 'Running integration tests on staging...'
-                // Run integration tests in staging environment
-                sh './run-integration-tests.sh' // Custom script for integration tests
-            }
-        }
-
-        stage('Deploy to Production') {
-            steps {
-                echo 'Deploying to production...'
-                // Deployment tool
-                sh 'aws deploy --environment production' // AWS CLI for production deployment
+                echo 'Stage 6: Integration Tests on Production - Running integration tests...'
+                // Integration tests might not be necessary for static sites, but you can run them if applicable
             }
         }
     }
-
     post {
-        always {
+        success {
             emailext (
-                to: "${env.EMAIL_RECIPIENT}",
-                subject: "Pipeline ${currentBuild.fullDisplayName} completed",
-                body: "Build finished with status: ${currentBuild.result}",
-                attachmentsPattern: '**/target/logs/*.log'
+                subject: 'Jenkins Build Success',
+                body: 'The build was successful and deployed to Netlify. See the details in Jenkins.',
+                to: "${EMAIL_RECIPIENT}"
             )
         }
-
-        success {
-            echo 'Build succeeded!'
-        }
-
         failure {
-            echo 'Build failed!'
+            emailext (
+                subject: 'Jenkins Build Failure',
+                body: 'The build failed. Check the Jenkins logs for more details.',
+                to: "${EMAIL_RECIPIENT}",
+                attachmentsPattern: '**/test-results/*.xml'
+            )
         }
     }
 }
