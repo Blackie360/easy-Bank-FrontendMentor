@@ -1,6 +1,6 @@
 # EasyBank-Demo
 
-Welcome to my first assignment for the GIDA Web2 Advanced course at Kabarak University!
+Welcome to my first assignment for the GIDA Web2 Advanced 
 
 ## Frontend Mentor - Easybank Landing Page Solution
 
